@@ -9,7 +9,7 @@
 #include <ostream>
 #include <iostream>
 
-#include <wrmath/util/math.h>
+#include <wrmath/math.h>
 
 
 namespace wr {
@@ -29,18 +29,18 @@ public:
     	 * The default constructor creates a zero vector for a given
     	 * type and size.
     	 */
-	Vector() { wr::util::DefaultEpsilon(this->epsilon); }
+	Vector() { wr::math::DefaultEpsilon(this->epsilon); }
 
 	/**
 	 * If given an initializer_list, the vector is created with
 	 * those values. There must be exactly N elements in the list.
-	 * @param ilst
+	 * @param ilstutil
 	 */
 	Vector(std::initializer_list<T>	ilst)
 	{
 		assert(ilst.size() == N);
 
-		wr::util::DefaultEpsilon(this->epsilon);
+		wr::math::DefaultEpsilon(this->epsilon);
 		std::copy(ilst.begin(), ilst.end(), this->arr.begin());
 	}	
 
@@ -81,7 +81,7 @@ public:
 	isZero() const
 	{
 		for (size_t i = 0; i < N; i++) {
-			if (!wr::util::WithinTolerance(this->arr[i], (T)0.0, this->epsilon)) {
+			if (!wr::math::WithinTolerance(this->arr[i], (T)0.0, this->epsilon)) {
 				return false;
 			}
 		}
@@ -107,7 +107,7 @@ public:
 	bool
 	isUnitVector() const
 	{
-		return wr::util::WithinTolerance(this->magnitude(), (T)1.0, this->epsilon);
+		return wr::math::WithinTolerance(this->magnitude(), (T)1.0, this->epsilon);
 	}
 
 
@@ -142,7 +142,7 @@ public:
 		}
 
 		T angle = this->angle(other);
-		if (wr::util::WithinTolerance(angle, (T)0.0, this->epsilon)) {
+		if (wr::math::WithinTolerance(angle, (T)0.0, this->epsilon)) {
 			return true;
 		}
 
@@ -163,7 +163,7 @@ public:
 			return true;
 		}
 
-		return wr::util::WithinTolerance(*this * other, (T)0.0, this->epsilon);
+		return wr::math::WithinTolerance(*this * other, (T)0.0, this->epsilon);
 	}
 
 
@@ -287,7 +287,7 @@ public:
 	 */
 	bool operator==(const Vector<T, N> &other) const {
 		for (size_t i = 0; i<N; i++) {
-			if (!wr::util::WithinTolerance(this->arr[i], other.arr[i], this->epsilon)) {
+			if (!wr::math::WithinTolerance(this->arr[i], other.arr[i], this->epsilon)) {
 				return false;
 			}
 		}

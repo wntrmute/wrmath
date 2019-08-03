@@ -1,6 +1,9 @@
-//
-// Created by kyle on 8/3/19.
-//
+/**
+ * orientation.h concerns itself with computing the orientation of some
+ * vector with respect to a reference plane that is assumed to be the
+ * of the Earth.
+ */
+
 
 #ifndef __WRMATH_GEOM_ORIENTATION_H
 #define __WRMATH_GEOM_ORIENTATION_H
@@ -11,12 +14,6 @@
 
 namespace wr {
 namespace geom {
-
-
-float	RadiansToDegreesF(float rads);
-double	RadiansToDegreesD(double rads);
-float	DegreesToRadiansF(float degrees);
-double	DegreesToRadiansD(double degrees);
 
 
 constexpr uint8_t Basis_i = 0;
