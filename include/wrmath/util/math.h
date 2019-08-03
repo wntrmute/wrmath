@@ -1,5 +1,5 @@
-#ifndef __WRNAV_UTIL_MATH_H
-#define __WRNAV_UTIL_MATH_H
+#ifndef __WRMATH_UTIL_MATH_H
+#define __WRMATH_UTIL_MATH_H
 
 
 namespace wr {
@@ -10,14 +10,14 @@ const double Epsilon_double = 0.0001;
 const float  Epsilon_float = 0.0001;
 
 
-void
+static void
 DefaultEpsilon(double &epsilon)
 {
 	epsilon = Epsilon_double;
 }
 
 
-void
+static void
 DefaultEpsilon(float &epsilon)
 {
 	epsilon = Epsilon_float;
@@ -25,7 +25,7 @@ DefaultEpsilon(float &epsilon)
 
 
 template <typename T>
-T
+static T
 WithinTolerance(T a, T b, T epsilon)
 {
 	return std::abs(a - b) < epsilon;
@@ -36,4 +36,4 @@ WithinTolerance(T a, T b, T epsilon)
 } // namespace wr
 
 
-#endif // __WRNAV_UTIL_MATH_H
+#endif // __WRMATH_UTIL_MATH_H

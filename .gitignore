@@ -2,3 +2,5 @@
 /cmake-build-*/
 /stage/
 /package/
+/docs/html/
+/docs/latex/

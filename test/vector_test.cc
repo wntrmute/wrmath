@@ -1,6 +1,5 @@
-#include <iostream>
 #include <gtest/gtest.h>
-#include <wrnav/geom/vector.h>
+#include <wrmath/geom/vector.h>
 
 using namespace std;
 using namespace wr;
@@ -82,6 +81,8 @@ TEST(Vector3FloatTests, UnitVector)
 	geom::Vector3f	unit {0.6651669556972103, 0.7069150218815566, 0.24046636539587804};
 
 	EXPECT_EQ(vec3.unitVector(), unit);
+	EXPECT_FALSE(vec3.isUnitVector());
+	EXPECT_TRUE(unit.isUnitVector());
 }
 
 
@@ -94,6 +95,37 @@ TEST(Vector3FloatTests, Angle)
 	
 	EXPECT_FLOAT_EQ(a.angle(b), 0.9914540426033251);
 	EXPECT_NEAR(c.angle(d), 1.052, 0.001);
+}
+
+TEST(Vector3FloatTests, ParallelOrthogonalVectors)
+{
+	geom::Vector3f	a {-2.029, 9.97, 4.172};
+	geom::Vector3f	b {-9.231, -6.639, -7.245};
+	geom::Vector3f	c {-2.328, -7.284, -1.214};
+	geom::Vector3f	d {-1.821, 1.072, -2.94};
+	geom::Vector3f	e {-2.0, 1.0, 3.0};
+	geom::Vector3f	f {-6.0, 3.0, 9.0};
+
+	EXPECT_FALSE(a.isParallel(b));
+	EXPECT_FALSE(a.isOrthogonal(b));
+
+	EXPECT_FALSE(c.isParallel(d));
+	EXPECT_TRUE(c.isOrthogonal(d));
+
+	EXPECT_TRUE(e.isParallel(f));
+	EXPECT_FALSE(e.isOrthogonal(f));
+}
+
+
+TEST(Vector3FloatTests, Projections)
+{
+	geom::Vector4f	a {3.009, -6.172, 3.692, -2.510};
+	geom::Vector4f	b {6.404, -9.144, 2.759, 8.718};
+	geom::Vector4f	c {1.9685, -2.8108, 0.8481, 2.6798};
+	geom::Vector4f	d {1.0405, -3.3612, 2.8439, -5.1898};
+
+	ASSERT_EQ(a.projectParallel(b), c);
+	ASSERT_EQ(a.projectOrthogonal(b), d);
 }
 
 
@@ -173,6 +205,8 @@ TEST(Vector3DoubleTests, UnitVector)
 	geom::Vector3d	unit {0.6651669556972103, 0.7069150218815566, 0.24046636539587804};
 
 	EXPECT_EQ(vec3.unitVector(), unit);
+	EXPECT_FALSE(vec3.isUnitVector());
+	EXPECT_TRUE(unit.isUnitVector());
 }
 
 
@@ -185,6 +219,38 @@ TEST(Vector3DoubleTests, Angle)
 	
 	EXPECT_DOUBLE_EQ(a.angle(b), 0.9914540426033251);
 	EXPECT_NEAR(c.angle(d), 1.052, 0.001);
+}
+
+
+TEST(Vector3DoubleTests, ParallelOrthogonalVectors)
+{
+	geom::Vector3d	a {-2.029, 9.97, 4.172};
+	geom::Vector3d	b {-9.231, -6.639, -7.245};
+	geom::Vector3d	c {-2.328, -7.284, -1.214};
+	geom::Vector3d	d {-1.821, 1.072, -2.94};
+	geom::Vector3d	e {-2.0, 1.0, 3.0};
+	geom::Vector3d	f {-6.0, 3.0, 9.0};
+
+	EXPECT_FALSE(a.isParallel(b));
+	EXPECT_FALSE(a.isOrthogonal(b));
+
+	EXPECT_FALSE(c.isParallel(d));
+	EXPECT_TRUE(c.isOrthogonal(d));
+
+	EXPECT_TRUE(e.isParallel(f));
+	EXPECT_FALSE(e.isOrthogonal(f));
+}
+
+
+TEST(Vector3DoubleTests, Projections)
+{
+	geom::Vector4d	a {3.009, -6.172, 3.692, -2.510};
+	geom::Vector4d	b {6.404, -9.144, 2.759, 8.718};
+	geom::Vector4d	c {1.9685, -2.8108, 0.8481, 2.6798};
+	geom::Vector4d	d {1.0405, -3.3612, 2.8439, -5.1898};
+
+	ASSERT_EQ(a.projectParallel(b), c);
+	ASSERT_EQ(a.projectOrthogonal(b), d);
 }
 
 
