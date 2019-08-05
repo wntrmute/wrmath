@@ -38,6 +38,18 @@ public:
 		this->w = std::fmod(this->w, this->maxRotation);
 	};
 
+	/**
+	 * A Quaternion may be initialised with a Vector<T, 4> comprised of the axis of rotation
+	 * followed by the angle of rotation.
+	 * @param vector A vector in the form <i, j, k, w>.
+	 */
+	Quaternion(Vector<T, 4> vector) :
+		v(Vector<T, 3> {vector[0], vector[1], vector[2]}),
+		w(vector[3])
+	{
+		wr::math::DefaultEpsilon(this->eps);
+		this->w = std::fmod(this->w, this->m
+	}
 
 	/**
 	 * Return the axis of rotation of this quaternion.
@@ -80,6 +92,17 @@ public:
 	}
 
 
+	Quaternion
+	complexConj()
+	{
+		return Quaternion(Vector<T, 4> {this->v[0], this->v[1], this->v[2], this->w})
+	}
+
+	/**
+	 * Return the quaternion as a Vector<T, 4>, with the axis of rotation
+	 * followed by the angle of rotation.
+	 * @return A vector representation of the quaternion.
+	 */
 	Vector<T, 4>
 	asVector()
 	{
