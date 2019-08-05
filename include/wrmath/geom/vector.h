@@ -211,7 +211,7 @@ public:
 	 * @return The cross product vector.
 	 */
 	Vector
-	cross(const Vector<T, N> &other)
+	cross(const Vector<T, N> &other) const
 	{
 		assert(N == 3);
 		return Vector<T, N> {
@@ -228,7 +228,9 @@ public:
 	 * @return A new vector that is the result of adding this and the
 	 *         other vector.
 	 */
-	Vector operator+(const Vector<T, N> &other) const {
+	Vector
+	operator+(const Vector<T, N> &other) const
+	{
 		Vector<T, N>	vec;
 
 		for (size_t i = 0; i < N; i++) {
@@ -245,7 +247,9 @@ public:
 	 * @return A new vector that is the result of subtracting the
 	 *         other vector from this one.
 	 */
-	Vector operator-(const Vector<T, N> &other) const {
+	Vector
+	operator-(const Vector<T, N> &other) const
+	{
 		Vector<T, N>	vec;
 
 		for (size_t i = 0; i < N; i++) {
@@ -261,7 +265,9 @@ public:
 	 * @param k The scaling value.
 	 * @return A new vector that is this vector scaled by k.
 	 */
-	Vector operator*(const T k) const {
+	Vector
+	operator*(const T k) const
+	{
 		Vector<T, N>	vec;
 
 		for (size_t i = 0; i < N; i++) {
@@ -277,7 +283,9 @@ public:
 	 * @param k The scaling value
 	 * @return A new vector that is this vector scaled by 1/k.
 	 */
-	Vector operator/(const T k) const {
+	Vector
+	operator/(const T k) const
+	{
 		Vector<T, N>	vec;
 
 		for (size_t i = 0; i < N; i++) {
@@ -293,7 +301,9 @@ public:
 	 * @param other The other vector.
 	 * @return A scalar value that is the dot product of the two vectors.
 	 */
-	T operator*(const Vector<T, N> &other) const {
+	T
+	operator*(const Vector<T, N> &other) const
+	{
 		T	result = 0;
 
 		for (size_t i = 0; i < N; i++) {
@@ -310,7 +320,9 @@ public:
 	 * @return Return true if all the components of both vectors are
 	 *         within the tolerance value.
 	 */
-	bool operator==(const Vector<T, N> &other) const {
+	bool
+	operator==(const Vector<T, N> &other) const
+	{
 		for (size_t i = 0; i<N; i++) {
 			if (!wr::math::WithinTolerance(this->arr[i], other.arr[i], this->epsilon)) {
 				return false;
@@ -326,7 +338,9 @@ public:
 	 * @return Return true if any of the components of both vectors are
 	 *         not within the tolerance value.
 	 */
-	bool operator!=(const Vector<T, N> &other) const {
+	bool
+	operator!=(const Vector<T, N> &other) const
+	{
 		return !(*this == other);
 	}
 
@@ -336,7 +350,9 @@ public:
 	 * @param i The component index.
 	 * @return The value of the vector component at i.
 	 */
-	T operator[](size_t i) const {
+	T
+	operator[](size_t i) const
+	{
 		return this->arr[i];
 	}
 
@@ -347,7 +363,9 @@ public:
 	 * @param vec The vector to be formatted.
 	 * @return The output stream.
 	 */
-	friend std::ostream& operator<<(std::ostream& outs, const Vector<T, N>& vec) {
+	friend std::ostream&
+	operator<<(std::ostream& outs, const Vector<T, N>& vec)
+	{
 		outs << "<";
 		for (size_t i = 0; i < N; i++) {
 			outs << vec.arr[i];

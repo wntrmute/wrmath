@@ -66,8 +66,9 @@ macro(package_add_gtest TESTNAME)
 endmacro()
 
 # define the tests
-package_add_gtest(vector_test test/vector_test.cc)
-package_add_gtest(orientation_test test/orientation_test.cc)
+package_add_gtest(vector_test 		test/vector_test.cc)
+package_add_gtest(orientation_test 	test/orientation_test.cc)
+package_add_gtest(quaternion_test 	test/quaternion_test.cc)
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose DEPENDS ${TEST_EXECS})
 
