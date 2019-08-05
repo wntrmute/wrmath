@@ -26,26 +26,6 @@ TEST(Vector3Miscellaneous, ExtractionOperator3f)
 }
 
 
-TEST(Vector3Miscellaneous, ExtractionOperator4d)
-{
-    geom::Vector4d	vec {1.0, 2.0, 3.0, 4.0};
-    stringstream	vecBuffer;
-
-    vecBuffer << vec;
-    EXPECT_EQ(vecBuffer.str(), "<1, 2, 3, 4>");
-}
-
-
-TEST(Vector3Miscellaneous, ExtractionOperator4f)
-{
-    geom::Vector4f	vec {1.0, 2.0, 3.0, 4.0};
-    stringstream	vecBuffer;
-
-    vecBuffer << vec;
-    EXPECT_EQ(vecBuffer.str(), "<1, 2, 3, 4>");
-}
-
-
 TEST(Vector3Miscellaneous, SetEpsilon)
 {
 	geom::Vector3f	a {1.0, 1.0, 1.0};
@@ -172,12 +152,12 @@ TEST(Vector3FloatTests, ParallelOrthogonalVectors)
 }
 
 
-TEST(Vector4FloatTests, Projections)
+TEST(Vector3FloatTests, Projections)
 {
-	geom::Vector4f	a {3.009, -6.172, 3.692, -2.510};
-	geom::Vector4f	b {6.404, -9.144, 2.759, 8.718};
-	geom::Vector4f	c {1.9685, -2.8108, 0.8481, 2.6798};
-	geom::Vector4f	d {1.0405, -3.3612, 2.8439, -5.1898};
+	geom::Vector3f	a {4.866769214609107, 6.2356222686140566, 9.140878417029711};
+	geom::Vector3f	b {6.135533104801077, 8.757851406697895, 0.6738031370548048};
+	geom::Vector3f	c {4.843812341655318, 6.9140509888133055, 0.5319465962229454};
+	geom::Vector3f	d {0.02295687295378901, -0.6784287201992489, 8.608931820806765};
 
 	ASSERT_EQ(a.projectParallel(b), c);
 	ASSERT_EQ(a.projectOrthogonal(b), d);
@@ -313,12 +293,12 @@ TEST(Vector3DoubleTests, ParallelOrthogonalVectors)
 }
 
 
-TEST(Vector4DoubleTests, Projections)
+TEST(Vector3DoubleTests, Projections)
 {
-	geom::Vector4d	a {3.009, -6.172, 3.692, -2.510};
-	geom::Vector4d	b {6.404, -9.144, 2.759, 8.718};
-	geom::Vector4d	c {1.9685, -2.8108, 0.8481, 2.6798};
-	geom::Vector4d	d {1.0405, -3.3612, 2.8439, -5.1898};
+	geom::Vector3d	a {4.866769214609107, 6.2356222686140566, 9.140878417029711};
+	geom::Vector3d	b {6.135533104801077, 8.757851406697895, 0.6738031370548048};
+	geom::Vector3d	c {4.843812341655318, 6.9140509888133055, 0.5319465962229454};
+	geom::Vector3d	d {0.02295687295378901, -0.6784287201992489, 8.608931820806765};
 
 	ASSERT_EQ(a.projectParallel(b), c);
 	ASSERT_EQ(a.projectOrthogonal(b), d);
