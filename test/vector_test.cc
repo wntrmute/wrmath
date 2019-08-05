@@ -172,7 +172,7 @@ TEST(Vector3FloatTests, ParallelOrthogonalVectors)
 }
 
 
-TEST(Vector3FloatTests, Projections)
+TEST(Vector4FloatTests, Projections)
 {
 	geom::Vector4f	a {3.009, -6.172, 3.692, -2.510};
 	geom::Vector4f	b {6.404, -9.144, 2.759, 8.718};
@@ -181,6 +181,17 @@ TEST(Vector3FloatTests, Projections)
 
 	ASSERT_EQ(a.projectParallel(b), c);
 	ASSERT_EQ(a.projectOrthogonal(b), d);
+}
+
+
+TEST(Vector3FloatTests, CrossProduct)
+{
+	geom::Vector3f	a {8.462, 7.893, -8.187};
+	geom::Vector3f	b {6.984, -5.975, 4.778};
+	geom::Vector3f	c {-11.2046, -97.6094, -105.685};
+
+	c.setEpsilon(0.001);
+	EXPECT_EQ(c, a.cross(b));
 }
 
 
@@ -302,7 +313,7 @@ TEST(Vector3DoubleTests, ParallelOrthogonalVectors)
 }
 
 
-TEST(Vector3DoubleTests, Projections)
+TEST(Vector4DoubleTests, Projections)
 {
 	geom::Vector4d	a {3.009, -6.172, 3.692, -2.510};
 	geom::Vector4d	b {6.404, -9.144, 2.759, 8.718};
@@ -312,6 +323,18 @@ TEST(Vector3DoubleTests, Projections)
 	ASSERT_EQ(a.projectParallel(b), c);
 	ASSERT_EQ(a.projectOrthogonal(b), d);
 }
+
+
+TEST(Vector3DoubleTests, CrossProduct)
+{
+	geom::Vector3d	a {8.462, 7.893, -8.187};
+	geom::Vector3d	b {6.984, -5.975, 4.778};
+	geom::Vector3d	c {-11.2046, -97.6094, -105.685};
+
+	c.setEpsilon(0.001); // double trouble
+	EXPECT_EQ(c, a.cross(b));
+}
+
 
 
 int

@@ -15,6 +15,7 @@
 namespace wr {
 namespace geom {
 
+
 /**
  * Vector provides a standard interface for dimensionless fixed-size
  * vectors. Once instantiated, they cannot be modified. Note that while
@@ -200,6 +201,24 @@ public:
 	{
 		Vector<T, N>	spar = this->projectParallel(basis);
 		return *this - spar;
+	}
+
+
+	/**
+	 * Compute the cross product of two vectors. This is only defined
+	 * over three-dimensional vectors.
+	 * @param other Another 3D vector.
+	 * @return The cross product vector.
+	 */
+	Vector
+	cross(const Vector<T, N> &other)
+	{
+		assert(N == 3);
+		return Vector<T, N> {
+			(this->arr[1] * other.arr[2]) - (other.arr[1] * this->arr[2]),
+			-((this->arr[0] * other.arr[2]) - (other.arr[0] * this->arr[2])),
+			(this->arr[0] * other.arr[1]) - (other.arr[0] * this->arr[1])
+		};
 	}
 
 
