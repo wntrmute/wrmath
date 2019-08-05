@@ -47,13 +47,25 @@ TEST(Quaterniond, Identity)
 }
 
 
+TEST(Quaternionf, Addition)
+{
+	geom::Quaternionf	p(geom::Vector3f {1.0, -2.0, 1.0}, 3.0);
+	geom::Quaternionf	q(geom::Vector3f {-1.0, 2.0, 3.0}, 2.0);
+	geom::Quaternionf	expected(geom::Vector3f{0.0, 0.0, 4.0}, 5.0);
+
+	EXPECT_EQ(p + q, expected);
+	EXPECT_EQ(expected - q, p);
+	EXPECT_NE(expected - q, q); // exercise !=
+}
+
+
 TEST(Quaternionf, Norm)
 {
 	geom::Quaternionf	p(geom::Vector3f {0.9899139811480784, 9.387110042325054, 6.161341707794767},
 				   5.563199889674063);
 	float 			norm = 12.57016663729933;
 
-	EXPECT_DOUBLE_EQ(p.norm(), norm);
+	EXPECT_FLOAT_EQ(p.norm(), norm);
 }
 
 
@@ -64,6 +76,15 @@ TEST(Quaternionf, Product)
 	geom::Quaternionf	expected(geom::Vector3f{-9.0, -2.0, 11.0}, 8.0);
 
 	EXPECT_EQ(p * q, expected);
+}
+
+
+TEST(Quaternionf, Identity)
+{
+	geom::Quaternionf	p(geom::Vector3f {1.0, -2.0, 1.0}, 3.0);
+	geom::Quaternionf	q;
+
+	EXPECT_EQ(p * q, p);
 }
 
 
