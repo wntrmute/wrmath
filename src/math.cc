@@ -33,6 +33,10 @@ DegreesToRadiansD(double degrees)
 }
 
 
+const double Epsilon_double = 0.0001;
+const float  Epsilon_float = 0.0001;
+
+
 void
 DefaultEpsilon(double &epsilon)
 {
