@@ -1,9 +1,29 @@
+#include <sstream>
 #include <gtest/gtest.h>
 #include <wrmath/geom/vector.h>
 
 using namespace std;
 using namespace wr;
 
+
+TEST(Vector3Miscellaneous, ExtractionOperator)
+{
+	geom::Vector3d	vec {1.0, 2.0, 3.0};
+	stringstream	vecBuffer;
+
+	vecBuffer << vec;
+	EXPECT_EQ(vecBuffer.str(), "<1, 2, 3>");
+}
+
+
+TEST(Vector3Miscellaneous, SetEpsilon)
+{
+	geom::Vector3f	a {1.0, 1.0, 1.0};
+	geom::Vector3f	b;
+
+	a.setEpsilon(1.1);
+	EXPECT_EQ(a, b);
+}
 
 TEST(Vector3FloatTests, Magnitude)
 {
@@ -105,6 +125,7 @@ TEST(Vector3FloatTests, ParallelOrthogonalVectors)
 	geom::Vector3f	d {-1.821, 1.072, -2.94};
 	geom::Vector3f	e {-2.0, 1.0, 3.0};
 	geom::Vector3f	f {-6.0, 3.0, 9.0};
+	geom::Vector3f	zeroVector;
 
 	EXPECT_FALSE(a.isParallel(b));
 	EXPECT_FALSE(a.isOrthogonal(b));
@@ -114,6 +135,10 @@ TEST(Vector3FloatTests, ParallelOrthogonalVectors)
 
 	EXPECT_TRUE(e.isParallel(f));
 	EXPECT_FALSE(e.isOrthogonal(f));
+
+	EXPECT_TRUE(zeroVector.isZero());
+	EXPECT_TRUE(c.isParallel(zeroVector));
+	EXPECT_TRUE(c.isOrthogonal(zeroVector));
 }
 
 
@@ -230,6 +255,7 @@ TEST(Vector3DoubleTests, ParallelOrthogonalVectors)
 	geom::Vector3d	d {-1.821, 1.072, -2.94};
 	geom::Vector3d	e {-2.0, 1.0, 3.0};
 	geom::Vector3d	f {-6.0, 3.0, 9.0};
+	geom::Vector3d	zeroVector;
 
 	EXPECT_FALSE(a.isParallel(b));
 	EXPECT_FALSE(a.isOrthogonal(b));
@@ -239,6 +265,10 @@ TEST(Vector3DoubleTests, ParallelOrthogonalVectors)
 
 	EXPECT_TRUE(e.isParallel(f));
 	EXPECT_FALSE(e.isOrthogonal(f));
+
+	EXPECT_TRUE(zeroVector.isZero());
+	EXPECT_TRUE(c.isParallel(zeroVector));
+	EXPECT_TRUE(c.isOrthogonal(zeroVector));
 }
 
 

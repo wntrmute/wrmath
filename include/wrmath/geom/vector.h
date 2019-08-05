@@ -29,12 +29,18 @@ public:
     	 * The default constructor creates a zero vector for a given
     	 * type and size.
     	 */
-	Vector() { wr::math::DefaultEpsilon(this->epsilon); }
+	Vector()
+	{
+		wr::math::DefaultEpsilon(this->epsilon);
+		for (size_t i = 0; i < N; i++) {
+			this->arr[i] = 0.0;
+		}
+	}
 
 	/**
 	 * If given an initializer_list, the vector is created with
 	 * those values. There must be exactly N elements in the list.
-	 * @param ilstutil
+	 * @param ilst An intializer list with N elements of type T.
 	 */
 	Vector(std::initializer_list<T>	ilst)
 	{

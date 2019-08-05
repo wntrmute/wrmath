@@ -14,6 +14,8 @@ if(DEFINED ENV{CMAKE_GCOV})
 add_compile_options(-fprofile-arcs -ftest-coverage)
 # Need CMake 3.15+.
 add_link_options(-fprofile-arcs -ftest-coverage)
+add_custom_target(coverage COMMAND lcov -d . -t wrmath -o wrmath.info -c
+						   COMMAND genhtml -o coverage-report wrmath.info)
 endif()
 
 
