@@ -6,13 +6,43 @@ using namespace std;
 using namespace wr;
 
 
-TEST(Vector3Miscellaneous, ExtractionOperator)
+TEST(Vector3Miscellaneous, ExtractionOperator3d)
 {
 	geom::Vector3d	vec {1.0, 2.0, 3.0};
 	stringstream	vecBuffer;
 
 	vecBuffer << vec;
 	EXPECT_EQ(vecBuffer.str(), "<1, 2, 3>");
+}
+
+
+TEST(Vector3Miscellaneous, ExtractionOperator3f)
+{
+	geom::Vector3f	vec {1.0, 2.0, 3.0};
+	stringstream	vecBuffer;
+
+	vecBuffer << vec;
+	EXPECT_EQ(vecBuffer.str(), "<1, 2, 3>");
+}
+
+
+TEST(Vector3Miscellaneous, ExtractionOperator4d)
+{
+    geom::Vector4d	vec {1.0, 2.0, 3.0, 4.0};
+    stringstream	vecBuffer;
+
+    vecBuffer << vec;
+    EXPECT_EQ(vecBuffer.str(), "<1, 2, 3, 4>");
+}
+
+
+TEST(Vector3Miscellaneous, ExtractionOperator4f)
+{
+    geom::Vector4f	vec {1.0, 2.0, 3.0, 4.0};
+    stringstream	vecBuffer;
+
+    vecBuffer << vec;
+    EXPECT_EQ(vecBuffer.str(), "<1, 2, 3, 4>");
 }
 
 

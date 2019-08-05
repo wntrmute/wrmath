@@ -14,7 +14,8 @@ if(DEFINED ENV{CMAKE_GCOV})
 add_compile_options(-fprofile-arcs -ftest-coverage)
 # Need CMake 3.15+.
 add_link_options(-fprofile-arcs -ftest-coverage)
-add_custom_target(coverage COMMAND lcov -d . -t wrmath -o wrmath.info -c
+add_custom_target(coverage COMMAND lcov -d . -t wrmath -o wrmath.info -c -i
+						   COMMAND lcov -d . -t wrmath -o wrmath.info -c
 						   COMMAND genhtml -o coverage-report wrmath.info)
 endif()
 
@@ -27,14 +28,6 @@ file(GLOB_RECURSE ${PROJECT_NAME}_SOURCES src/*.cc)
 ## BUILD
 
 add_library(lib${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
-# add_library(LIBNAME
-#     SOURCES
-# )
-# 
-# add_executable(EXE_NAME MAIN)
-# target_link_libraries(EXE_NAME LIBNAMES)
-# add_dependencies(EXE_NAME LIBNAMES)
-
 
 ## INSTALL
 
