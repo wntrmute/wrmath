@@ -109,10 +109,12 @@ TEST(Vector3FloatTests, UnitVector)
 	// Test values randomly generated and calculated with numpy.
 	geom::Vector3f	vec3 {5.320264018493507, 5.6541812891273935, 1.9233435162644652};
 	geom::Vector3f	unit {0.6651669556972103, 0.7069150218815566, 0.24046636539587804};
+	geom::Vector3f	unit2;
 
 	EXPECT_EQ(vec3.unitVector(), unit);
 	EXPECT_FALSE(vec3.isUnitVector());
 	EXPECT_TRUE(unit.isUnitVector());
+	EXPECT_TRUE(unit2.isUnitVector());
 }
 
 
@@ -135,7 +137,7 @@ TEST(Vector3FloatTests, ParallelOrthogonalVectors)
 	geom::Vector3f	d {-1.821, 1.072, -2.94};
 	geom::Vector3f	e {-2.0, 1.0, 3.0};
 	geom::Vector3f	f {-6.0, 3.0, 9.0};
-	geom::Vector3f	zeroVector;
+	geom::Vector3f	zeroVector {0.0, 0.0, 0.0};
 
 	EXPECT_FALSE(a.isParallel(b));
 	EXPECT_FALSE(a.isOrthogonal(b));
@@ -249,10 +251,12 @@ TEST(Vector3DoubleTests, UnitVector)
 	// Test values randomly generated and calculated with numpy.
 	geom::Vector3d	vec3 {5.320264018493507, 5.6541812891273935, 1.9233435162644652};
 	geom::Vector3d	unit {0.6651669556972103, 0.7069150218815566, 0.24046636539587804};
+	geom::Vector3d	unit2;
 
 	EXPECT_EQ(vec3.unitVector(), unit);
 	EXPECT_FALSE(vec3.isUnitVector());
 	EXPECT_TRUE(unit.isUnitVector());
+	EXPECT_TRUE(unit2.isUnitVector());
 }
 
 
@@ -276,7 +280,7 @@ TEST(Vector3DoubleTests, ParallelOrthogonalVectors)
 	geom::Vector3d	d {-1.821, 1.072, -2.94};
 	geom::Vector3d	e {-2.0, 1.0, 3.0};
 	geom::Vector3d	f {-6.0, 3.0, 9.0};
-	geom::Vector3d	zeroVector;
+	geom::Vector3d	zeroVector {0.0, 0.0, 0.0};
 
 	EXPECT_FALSE(a.isParallel(b));
 	EXPECT_FALSE(a.isOrthogonal(b));

@@ -8,15 +8,19 @@ project(wrmath VERSION 0.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_compile_options(-Werror -Wall -g -O0)
+# Don't warn on unused functions, because this is a library and not all
+# functions might be used.
+add_compile_options(-Werror -Wno-unused-function -Wall -g -O0)
 
 if(DEFINED ENV{CMAKE_GCOV})
 add_compile_options(-fprofile-arcs -ftest-coverage)
 # Need CMake 3.15+.
 add_link_options(-fprofile-arcs -ftest-coverage)
 add_custom_target(coverage COMMAND lcov -d . -t wrmath -o wrmath.info -c -i
-						   COMMAND lcov -d . -t wrmath -o wrmath.info -c
-						   COMMAND genhtml -o coverage-report wrmath.info)
+			   COMMAND lcov -d . -t wrmath -o wrmath.info -c
+			   COMMAND lcov -d . -t wrmath -o wrmath.info -r wrmath.info *gtest*
+			   COMMAND genhtml -o coverage-report wrmath.info)
+message(STATUS, "Code coverage enabled.")
 endif()
 
 

@@ -12,6 +12,11 @@
 #include <wrmath/math.h>
 
 
+// This implementation is essentially a C++ translation of a Python library
+// I wrote for Coursera's "Linear Algebra for Machine Learning" course. Many
+// of the test vectors come from quiz questions in the class.
+
+
 namespace wr {
 namespace geom {
 
@@ -27,15 +32,17 @@ template <typename T, size_t N>
 class Vector {
 public:
     	/**
-    	 * The default constructor creates a zero vector for a given
+    	 * The default constructor creates a unit vector for a given
     	 * type and size.
     	 */
 	Vector()
 	{
-		wr::math::DefaultEpsilon(this->epsilon);
+		T	unitLength = (T)1.0 / std::sqrt(N);
 		for (size_t i = 0; i < N; i++) {
-			this->arr[i] = 0.0;
+			this->arr[i] = unitLength;
 		}
+
+		wr::math::DefaultEpsilon(this->epsilon);
 	}
 
 	/**
