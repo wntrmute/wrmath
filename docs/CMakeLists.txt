@@ -1,7 +1,7 @@
 find_package(Doxygen REQUIRED)
 
 # Find all the public headers
-get_target_property(WRMATH_PUBLIC_HEADER_DIR libwrmath INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(WRMATH_PUBLIC_HEADER_DIR wrmath INTERFACE_INCLUDE_DIRECTORIES)
 file(GLOB_RECURSE WRMATH_PUBLIC_HEADERS ${WRMATH_PUBLIC_HEADER_DIR}/*.h)
 
 #This will be the main output of our command

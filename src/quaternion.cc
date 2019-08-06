@@ -65,26 +65,6 @@ quaterniond_from_euler(Vector3d euler)
 }
 
 
-template <typename T>
-Quaternion<T>
-LERP(Quaternion<T> p, Quaternion<T> q, T t)
-{
-	return p + (q - p) * t;
-}
-
-
-template <typename T>
-Quaternion<T>
-ShortestSLERP(Quaternion<T> p, Quaternion<T> q, T t)
-{
-	T	innerProduct = p.dot(q);
-	T	sign = innerProduct >= 0.0 ? -1.0 : 1.0;
-	T	acip = std::acos(innerProduct);
-
-	return (p * std::sin((T)1.0 - t) * acip + p * sign * std::sin(t * acip)) / std::sin(acip);
-}
-
-
 void
 Quaternion_SelfTest()
 {

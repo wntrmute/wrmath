@@ -107,6 +107,19 @@ TEST(Quaterniond, Rotate)
 }
 
 
+TEST(Quaterniond, ShortestSLERP)
+{
+	geom::Quaterniond	p = geom::Quaterniond {0.382683, 0, 0, 0.92388};
+	geom::Quaterniond	q = geom::Quaterniond {-0.382683, 0, 0, 0.92388};
+	geom::Quaterniond	r = geom::Quaterniond {0, 0, 0, 1};
+
+
+	EXPECT_EQ(geom::ShortestSLERP(p, q, 0.0), p);
+	EXPECT_EQ(geom::ShortestSLERP(p, q, 1.0), q);
+	EXPECT_EQ(geom::ShortestSLERP(p, q, 0.5), r);
+}
+
+
 TEST(Quaterniond, Unit)
 {
 	geom::Quaterniond	q(geom::Vector4d{0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.0});

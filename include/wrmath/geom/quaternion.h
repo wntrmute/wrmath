@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cmath>
 #include <initializer_list>
+#include <iostream>
 #include <ostream>
 #include <wrmath/geom/vector.h>
 #include <wrmath/math.h>
@@ -123,8 +124,25 @@ public:
 	}
 
 
+	/// Compute the dot product of two quaternions.
+	///
+	/// \param other Another quaternion.
+	/// \return The dot product between the two quaternions.
+	T
+	dot(const Quaternion<T> &other) const
+	{
+		double	innerProduct = this->v[0] * other.v[0];
+
+		innerProduct += (this->v[1] * other.v[1]);
+		innerProduct += (this->v[2] * other.v[2]);
+		innerProduct += (this->w * other.w);
+		return innerProduct;
+	}
+
+
 	/// Compute the norm of a quaternion. Treating the Quaternion as a
 	/// Vector<T, 4>, it's the same as computing the magnitude.
+	///
 	/// @return A non-negative real number.
 	T
 	norm() const
@@ -139,6 +157,15 @@ public:
 		return std::sqrt(n);
 	}
 
+
+	/// Return the unit quaternion.
+	///
+	/// \return The unit quaternion.
+	Quaternion
+	unitQuaternion()
+	{
+		return *this / this->norm();
+	}
 
 	/// Compute the conjugate of a quaternion.
 	/// @return The conjugate of this quaternion.
@@ -393,7 +420,11 @@ Quaterniond	quaterniond_from_euler(Vector3d euler);
 /// \return A Quaternion representing the linear interpolation of the
 ///	    two quaternions.
 template <typename T>
-Quaternion<T>	LERP(Quaternion<T> p, Quaternion<T> q, T t);
+Quaternion<T>
+LERP(Quaternion<T> p, Quaternion<T> q, T t)
+{
+	return (p + (q - p) * t).unitQuaternion();
+}
 
 
 /// ShortestSLERP computes the shortest distance spherical linear
@@ -402,13 +433,30 @@ Quaternion<T>	LERP(Quaternion<T> p, Quaternion<T> q, T t);
 ///
 /// \tparam T
 /// \param p The starting quaternion.
-/// \param q The ending quaternion.
+/// \param q The ending quaternion.Short
 /// \param t The fraction of the distance between the two quaternions
 ///	     to interpolate.
 /// \return A Quaternion representing the shortest path between two
 ///         quaternions.
 template <typename T>
-Quaternion<T>	ShortestSLERP(Quaternion<T> p, Quaternion<T> q, T t);
+Quaternion<T>
+ShortestSLERP(Quaternion<T> p, Quaternion<T> q, T t)
+{
+	assert(p.isUnitQuaternion());
+	assert(q.isUnitQuaternion());
+
+	T	dp = p.dot(q);
+	T	sign = dp < 0.0 ? -1.0 : 1.0;
+	T	omega = std::acos(dp * sign);
+	T	sin_omega = std::sin(omega); // Compute once.
+
+	if (dp > 0.99999) {
+		return LERP(p, q * sign, t);
+	}
+
+	return (p * std::sin((1.0 - t) * omega) / sin_omega) +
+	       (q * sign * std::sin(omega*t) / sin_omega);
+}
 
 
 /// Run a quick self test to exercise basic functionality of the Quaternion

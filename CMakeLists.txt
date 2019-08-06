@@ -29,11 +29,16 @@ include_directories(include)
 file(GLOB_RECURSE ${PROJECT_NAME}_HEADERS include/**.h)
 file(GLOB_RECURSE ${PROJECT_NAME}_SOURCES src/*.cc)
 
-message("${PROJECT_NAME}_SOURCES -> libwrmath")
+message("${${PROJECT_NAME}_SOURCES}	 -> libwrmath")
 
 ## BUILD
 
-add_library(lib${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
+add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
+add_executable(euler2quat tools/euler2quat.cc)
+target_link_libraries(euler2quat ${PROJECT_NAME})
+set_target_properties(${TESTNAME} PROPERTIES
+		FOLDER bin
+		RUNTIME_OUTPUT_DIRECTORY bin)
 
 ## INSTALL
 
@@ -62,7 +67,7 @@ include(CTest)
 set(TEST_EXECS)
 macro(package_add_gtest TESTNAME)
 	add_executable(${TESTNAME} ${ARGN})
-	target_link_libraries(${TESTNAME} gtest_main lib${PROJECT_NAME})
+	target_link_libraries(${TESTNAME} gtest_main ${PROJECT_NAME})
 	target_compile_options(${TESTNAME} PUBLIC ${GTEST_CFLAGS})
 	add_test(NAME ${TESTNAME} COMMAND ${TESTNAME})
 	set_target_properties(${TESTNAME} PROPERTIES
