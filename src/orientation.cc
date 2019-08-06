@@ -1,4 +1,4 @@
-#include <cmath>
+#include <wrmath/geom/vector.h>
 #include <wrmath/geom/orientation.h>
 
 
@@ -9,7 +9,7 @@ namespace geom {
 float
 Heading2f(Vector2f vec)
 {
-	return vec.angle(Basis2f[Basis_i]);
+	return vec.angle(Basis2f[Basis_x]);
 }
 
 
@@ -24,7 +24,7 @@ Heading3f(Vector3f vec)
 double
 Heading2d(Vector2d vec)
 {
-	return vec.angle(Basis2d[Basis_i]);
+	return vec.angle(Basis2d[Basis_x]);
 }
 
 

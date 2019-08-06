@@ -7,6 +7,12 @@ using namespace std;
 using namespace wr;
 
 
+TEST(Quaternion, SelfTest)
+{
+	geom::Quaternion_SelfTest();
+}
+
+
 TEST(Quaterniond, Addition)
 {
 	geom::Quaterniond	p(geom::Vector4d {1.0, -2.0, 1.0, 3.0});
@@ -247,6 +253,16 @@ TEST(QuaternionMiscellaneous, OutputStream)
 
 	ss << q;
 	EXPECT_EQ(ss.str(), "4 + <1, 2, 3>");
+}
+
+
+TEST(QuaternionMiscellanous, InitializerConstructor)
+{
+	geom::Quaternionf	p {1.0, 1.0, 1.0, 1.0};
+	geom::Quaternionf	q(geom::Vector4f {1.0, 1.0, 1.0, 1.0});
+
+	EXPECT_EQ(p, q);
+	EXPECT_FLOAT_EQ(p.norm(), 2.0);
 }
 
 

@@ -29,6 +29,8 @@ include_directories(include)
 file(GLOB_RECURSE ${PROJECT_NAME}_HEADERS include/**.h)
 file(GLOB_RECURSE ${PROJECT_NAME}_SOURCES src/*.cc)
 
+message("${PROJECT_NAME}_SOURCES -> libwrmath")
+
 ## BUILD
 
 add_library(lib${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
