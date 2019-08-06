@@ -1,4 +1,8 @@
+if (DEFINED ENV{CMAKE_GCOV})
 cmake_minimum_required(VERSION 3.15)
+else()
+cmake_minimum_required(VERSION 3.10)
+endif()
 cmake_policy(SET CMP0048 NEW)
 
 
@@ -12,7 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # functions might be used.
 add_compile_options(-Werror -Wno-unused-function -Wall -g -O0)
 
-if(DEFINED ENV{CMAKE_GCOV})
+if (DEFINED ENV{CMAKE_GCOV})
 add_compile_options(-fprofile-arcs -ftest-coverage)
 # Need CMake 3.15+.
 add_link_options(-fprofile-arcs -ftest-coverage)
