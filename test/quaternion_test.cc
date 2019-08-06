@@ -109,10 +109,15 @@ TEST(Quaterniond, Rotate)
 
 TEST(Quaterniond, ShortestSLERP)
 {
+	// Our starting point is an orientation that is yawed 45° - our
+	// orientation is pointed π/4 radians in the X axis.
 	geom::Quaterniond	p = geom::Quaterniond {0.382683, 0, 0, 0.92388};
+	// Our ending point is an orientation that is yawed -45° - or
+	// pointed -π/4 radians in the X axis.
 	geom::Quaterniond	q = geom::Quaterniond {-0.382683, 0, 0, 0.92388};
-	geom::Quaterniond	r = geom::Quaterniond {0, 0, 0, 1};
-
+	// The halfway point should be oriented midway about the X axis. It turns
+	// out this is an identity quaternion.
+	geom::Quaterniond	r;
 
 	EXPECT_EQ(geom::ShortestSLERP(p, q, 0.0), p);
 	EXPECT_EQ(geom::ShortestSLERP(p, q, 1.0), q);
