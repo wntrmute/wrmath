@@ -3,14 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to wrmath's documentation!
-==================================
+libwrmath: WNTRMUTE ROBOTICS' maths library
+===========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    api
+   vector
+   quaternion
+   resources
+   api/wrmath
+
+
+``wrmath`` is a maths library aimed at robotics and navigation
+applications. It provides classes for certain mathematics 
+structures (e.g. :ref:`Vectors <vector-docs>`).
 
 
 Indices and tables

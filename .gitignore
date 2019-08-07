@@ -5,3 +5,5 @@
 /docs/html/
 /docs/latex/
 /docs/xml/
+docs/sphinx/_build/
+docs/sphinx/api/

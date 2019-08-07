@@ -1,4 +1,0 @@
-wrmath API
-==========
-
-.. doxygenindex::
