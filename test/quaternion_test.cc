@@ -111,10 +111,10 @@ TEST(Quaterniond, ShortestSLERP)
 {
 	// Our starting point is an orientation that is yawed 45° - our
 	// orientation is pointed π/4 radians in the X axis.
-	geom::Quaterniond	p = geom::Quaterniond {0.382683, 0, 0, 0.92388};
+	geom::Quaterniond	p {0.382683, 0, 0, 0.92388};
 	// Our ending point is an orientation that is yawed -45° - or
 	// pointed -π/4 radians in the X axis.
-	geom::Quaterniond	q = geom::Quaterniond {-0.382683, 0, 0, 0.92388};
+	geom::Quaterniond	q {-0.382683, 0, 0, 0.92388};
 	// The halfway point should be oriented midway about the X axis. It turns
 	// out this is an identity quaternion.
 	geom::Quaterniond	r;
@@ -122,6 +122,25 @@ TEST(Quaterniond, ShortestSLERP)
 	EXPECT_EQ(geom::ShortestSLERP(p, q, 0.0), p);
 	EXPECT_EQ(geom::ShortestSLERP(p, q, 1.0), q);
 	EXPECT_EQ(geom::ShortestSLERP(p, q, 0.5), r);
+}
+
+
+TEST(Quaterniond, ShortestSLERP2)
+{
+	// Start with an orientation pointing forward, all Euler angles
+	// set to 0.
+	geom::Quaterniond	start {0.0, 0.0, 0.0, 1.0};
+	// The goal is to end up face up, or 90º pitch (still facing forward).
+	geom::Quaterniond	end {0, -0.707107, 0, 0.707107};
+	// Halfway to the endpoint should be a 45º pitch.
+	geom::Quaterniond	halfway {0, -0.382683, 0, 0.92388 };
+	// 2/3 of the way should be 60º pitch.
+	geom::Quaterniond	twoThirds {0, -0.5, 0, 0.866025};
+
+	EXPECT_EQ(ShortestSLERP(start, end, 0.0), start);
+	EXPECT_EQ(ShortestSLERP(start, end, 1.0), end);
+	EXPECT_EQ(ShortestSLERP(start, end, 0.5), halfway);
+	EXPECT_EQ(ShortestSLERP(start, end, 2.0/3.0), twoThirds);
 }
 
 
@@ -225,6 +244,43 @@ TEST(Quaternionf, Rotate)
 
 	EXPECT_TRUE(p.isUnitQuaternion());
 	EXPECT_EQ(p.rotate(v), vr);
+}
+
+
+TEST(Quaternionf, ShortestSLERP)
+{
+	// Our starting point is an orientation that is yawed 45° - our
+	// orientation is pointed π/4 radians in the X axis.
+	geom::Quaternionf	p {0.382683, 0, 0, 0.92388};
+	// Our ending point is an orientation that is yawed -45° - or
+	// pointed -π/4 radians in the X axis.
+	geom::Quaternionf	q {-0.382683, 0, 0, 0.92388};
+	// The halfway point should be oriented midway about the X axis. It turns
+	// out this is an identity quaternion.
+	geom::Quaternionf	r;
+
+	EXPECT_EQ(geom::ShortestSLERP(p, q, (float)0.0), p);
+	EXPECT_EQ(geom::ShortestSLERP(p, q, (float)1.0), q);
+	EXPECT_EQ(geom::ShortestSLERP(p, q, (float)0.5), r);
+}
+
+
+TEST(Quaternionf, ShortestSLERP2)
+{
+	// Start with an orientation pointing forward, all Euler angles
+	// set to 0.
+	geom::Quaternionf	start {0.0, 0.0, 0.0, 1.0};
+	// The goal is to end up face up, or 90º pitch (still facing forward).
+	geom::Quaternionf	end {0, -0.707107, 0, 0.707107};
+	// Halfway to the endpoint should be a 45º pitch.
+	geom::Quaternionf	halfway {0, -0.382683, 0, 0.92388 };
+	// 2/3 of the way should be 60º pitch.
+	geom::Quaternionf	twoThirds {0, -0.5, 0, 0.866025};
+
+	EXPECT_EQ(ShortestSLERP(start, end, (float)0.0), start);
+	EXPECT_EQ(ShortestSLERP(start, end, (float)1.0), end);
+	EXPECT_EQ(ShortestSLERP(start, end, (float)0.5), halfway);
+	EXPECT_EQ(ShortestSLERP(start, end, (float)(2.0/3.0)), twoThirds);
 }
 
 
