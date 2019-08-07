@@ -7,6 +7,7 @@
 
 
 namespace wr {
+/// math contains utility math functions.
 namespace math {
 
 

@@ -1,3 +1,7 @@
+/// \file madgwick.h
+/// \brief Implementation of a Madgwick filter.
+///
+/// See [the paper](http://x-io.co.uk/res/doc/madgwick_internal_report.pdf).
 #ifndef __WRMATH_FILTER_MADGWICK_H
 #define __WRMATH_FILTER_MADGWICK_H
 
@@ -7,6 +11,7 @@
 
 
 namespace wr {
+/// filter contains filtering algorithms.
 namespace filter {
 
 
@@ -75,7 +80,7 @@ public:
 	/// Update the sensor frame with a gyroscope reading.
 	///
 	/// \param gyro A three-dimensional vector containing gyro readings
-	///             as \f$<\omega_x, \omega_y, \omega_z\>f$.
+	///             as \f$<\omega_{x}, \omega_y, \omega_z>\f$.
 	/// \param delta The time step between readings. It must not be zero.
 	void
 	updateAngularOrientation(const geom::Vector<T, 3> &gyro, T delta)
