@@ -1,7 +1,7 @@
 /// \file madgwick.h
 /// \brief Implementation of a Madgwick filter.
 ///
-/// See [the paper](http://x-io.co.uk/res/doc/madgwick_internal_report.pdf).
+/// See
 #ifndef __WRMATH_FILTER_MADGWICK_H
 #define __WRMATH_FILTER_MADGWICK_H
 
@@ -10,12 +10,21 @@
 #include <wrmath/geom/quaternion.h>
 
 
+/// wr contains the wntrmute robotics code.
 namespace wr {
 /// filter contains filtering algorithms.
 namespace filter {
 
 
-/// Madgwick implements an efficient orientation filter for IMUs.
+/// @brief Madgwick implements an efficient orientation filter for IMUs.
+///
+/// Madgwick is a  novel  orientation  filter  applicable  to  IMUs
+/// consisting  oftri-axis  gyroscopes  and  accelerometers,  and  MARG
+/// sensor  arrays  that  also  includetri-axis magnetometers.  The MARG
+/// implementation incorporates magnetic distortionand  gyroscope  bias
+/// drift  compensation.
+///
+/// It is described in the paper [An efficient orientation filter for inertial and inertial/magnetic sensor arrays](http://x-io.co.uk/res/doc/madgwick_internal_report.pdf).
 ///
 /// \tparam T A floating point type.
 template <typename T>
@@ -58,7 +67,7 @@ public:
 	/// with respect to the sensor frame.
 	///
 	/// \param gyro A three-dimensional vector containing gyro readings
-	///             as \f$<\omega_x, \omega_y, \omega_z\>f$.
+	///             as w_x, w_y, w_z.
 	/// \return A quaternion representing the rate of angular change.
 	geom::Quaternion<T>
 	angularRate(const geom::Vector<T, 3> &gyro) const
@@ -68,6 +77,8 @@ public:
 
 	/// Update the sensor frame to a new frame.
 	///
+	/// \param sf The new sensor frame replacing the previous one.
+	/// \param delta The time delta since the last update.
 	void
 	updateFrame(const geom::Quaternion<T> &sf, T delta)
 	{
@@ -80,7 +91,7 @@ public:
 	/// Update the sensor frame with a gyroscope reading.
 	///
 	/// \param gyro A three-dimensional vector containing gyro readings
-	///             as \f$<\omega_{x}, \omega_y, \omega_z>\f$.
+	///             as w_x, w_y, w_z.
 	/// \param delta The time step between readings. It must not be zero.
 	void
 	updateAngularOrientation(const geom::Vector<T, 3> &gyro, T delta)
