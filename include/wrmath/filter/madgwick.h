@@ -98,6 +98,13 @@ private:
 };
 
 
+/// Madgwickd is a shorthand alias for a Madgwick<double>.
+typedef Madgwick<double>	Madgwickd;
+
+/// Madgwickf is a shorthand alias for a Madgwick<float>.
+typedef Madgwick<float>		Madgwickf;
+
+
 } // namespace filter
 } // namespace wr
 
