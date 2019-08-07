@@ -38,7 +38,7 @@ namespace geom {
 /// Like vectors, quaternions carry an internal tolerance value ε that is used for
 /// floating point comparisons. The wr::math namespace contains the default values
 /// used for this; generally, a tolerance of 0.0001 is considered appropriate for
-/// the uses of this library. MATHJThe tolerance can be explicitly set with the
+/// the uses of this library. The tolerance can be explicitly set with the
 /// setEpsilon method.
 template<typename T>
 class Quaternion {
@@ -463,13 +463,6 @@ ShortestSLERP(Quaternion<T> p, Quaternion<T> q, T t)
 /// class to verify correct operation. Note that if \#NDEBUG is defined, the
 /// self test is disabled.
 void		Quaternion_SelfTest();
-
-
-// Helpful references for understanding quaternions:
-// + "Intro to Quaternions" - https://www.youtube.com/watch?v=fKIss4EV6ME
-//   15 minutes into this video I had a more intuitive understanding.
-// + "Quaternions and Rotations" - http://graphics.stanford.edu/courses/cs348a-17-winter/Papers/quaternion.pdf
-// + "Understanding Quaternions" - http://www.chrobotics.com/library/understanding-quaternions
 
 
 } // namespace geom

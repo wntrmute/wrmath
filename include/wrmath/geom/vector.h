@@ -25,10 +25,13 @@ namespace geom {
 /// @brief Vectors represent a direction and magnitude.
 ///
 /// Vector provides a standard interface for dimensionless fixed-size
-/// vectors. Once instantiated, they cannot be modified. Note that while
-/// the type is generic, it's intended to be used with floating-point
-/// types. They can be indexed like arrays, and they contain an epsilon
-/// value that defines a tolerance for equality.
+/// vectors. Once instantiated, they cannot be modified.
+///
+/// Note that while the class is templated, it's intended to be used with
+/// floating-point types.
+///
+/// Vectors can be indexed like arrays, and they contain an epsilon value
+/// that defines a tolerance for equality.
 template <typename T, size_t N>
 class Vector {
 public:
@@ -314,9 +317,18 @@ public:
 
 
 	/// Support array indexing into vector.
+	///
+	/// Note that the values of the vector cannot be modified. Instead,
+	/// it's required to do something like the following:
+	///
+	/// ```
+	/// Vector3d	a {1.0, 2.0, 3.0};
+	/// Vector3d	b {a[0], a[1]*2.0, a[2]};
+	/// ```
+	///
 	/// @param i The component index.
 	/// @return The value of the vector component at i.
-	T
+	const T&
 	operator[](size_t i) const
 	{
 		return this->arr[i];
