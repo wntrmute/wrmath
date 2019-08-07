@@ -15,7 +15,8 @@ Coordinate systems
 
 The library uses a left-hand coordinate system where +x is north, +y is
 east, and +z is up. Accordingly, where Euler angles are concerned, the
-ZYX (yaw / pitch / roll) axes are used.
+ZYX (yaw / pitch / roll) axes are used. The code follows the convention
+of using ψ, θ, ϕ to represent yaw, pitch, and roll.
 
 Important classes
 -----------------

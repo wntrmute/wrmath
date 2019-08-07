@@ -91,6 +91,16 @@ public:
 		this->updateFrame(this->sensorFrame + q, delta);
 	}
 
+
+	/// Retrieve a vector of the Euler angles in ZYX orientation.
+	///
+	/// \return A vector of Euler angles as <ψ, θ, ϕ>.
+	geom::Vector<T, 3>
+	euler()
+	{
+		return this->sensorFrame.euler();
+	}
+
 private:
 	T			deltaT;
 	geom::Quaternion<T>	previousSensorFrame;

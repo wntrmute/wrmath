@@ -10,7 +10,7 @@ libwrmath: WNTRMUTE ROBOTICS' maths library
    :maxdepth: 3
    :caption: Contents:
 
-   api
+   overview
    vector
    quaternion
    resources

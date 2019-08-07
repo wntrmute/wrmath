@@ -8,5 +8,4 @@ else
 	HOST="freeside.wntrmute.net:"
 fi
 
-cd docs && doxygen && rsync -auv html/ ${HOST}sites/wntrmute-dev/wrmath/
-cd sphinx && make html && rsync -auv _build/html/ ${HOST}sites/wntrmute-dev/sphinx/
+cd docs/sphinx && make html && rsync -auv _build/html/ ${HOST}sites/wrmath/
