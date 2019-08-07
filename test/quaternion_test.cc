@@ -15,9 +15,9 @@ TEST(Quaternion, SelfTest)
 
 TEST(Quaterniond, Addition)
 {
-	geom::Quaterniond	p(geom::Vector4d {1.0, -2.0, 1.0, 3.0});
-	geom::Quaterniond	q(geom::Vector4d {-1.0, 2.0, 3.0, 2.0});
-	geom::Quaterniond	expected(geom::Vector4d{0.0, 0.0, 4.0, 5.0});
+	geom::Quaterniond	p(geom::Vector4d {3.0, 1.0, -2.0, 1.0});
+	geom::Quaterniond	q(geom::Vector4d {2.0, -1.0, 2.0, 3.0});
+	geom::Quaterniond	expected(geom::Vector4d{5.0, 0.0, 0.0, 4.0});
 
 	EXPECT_EQ(p + q, expected);
 	EXPECT_EQ(expected - q, p);
@@ -27,8 +27,8 @@ TEST(Quaterniond, Addition)
 
 TEST(Quaterniond, Conjugate)
 {
-	geom::Quaterniond	p(geom::Vector4d {3.0, 4.0, 5.0, 2.0});
-	geom::Quaterniond	q(geom::Vector4d {-3.0, -4.0, -5.0, 2.0});
+	geom::Quaterniond	p {2.0, 3.0, 4.0, 5.0};
+	geom::Quaterniond	q {2.0, -3.0, -4.0, -5.0};
 
 	EXPECT_EQ(p.conjugate(), q);
 }
@@ -45,17 +45,18 @@ TEST(Quaterniond, Euler)
 
 TEST(Quaterniond, Identity)
 {
-	geom::Quaterniond	p(geom::Vector4d {1.0, -2.0, 1.0, 3.0});
+	geom::Quaterniond	p {3.0, 1.0, -2.0, 1.0};
 	geom::Quaterniond	q;
 
+	EXPECT_TRUE(q.isIdentity());
 	EXPECT_EQ(p * q, p);
 }
 
 
 TEST(Quaterniond, Inverse)
 {
-	geom::Quaterniond	p(geom::Vector4d {3.0, 4.0, 5.0, 2.0});
-	geom::Quaterniond	q(geom::Vector4d {-0.05556, -0.07407, -0.09259, 0.03704 });
+	geom::Quaterniond	p {2.0, 3.0, 4.0, 5.0};
+	geom::Quaterniond	q {0.03704, -0.05556, -0.07407, -0.09259};
 
 	EXPECT_EQ(p.inverse(), q);
 }
@@ -63,8 +64,7 @@ TEST(Quaterniond, Inverse)
 
 TEST(Quaterniond, Norm)
 {
-	geom::Quaterniond	p(geom::Vector4d {0.9899139811480784, 9.387110042325054, 6.161341707794767,
-						  5.563199889674063});
+	geom::Quaterniond	p {5.563199889674063, 0.9899139811480784, 9.387110042325054, 6.161341707794767};
 	double 			norm = 12.57016663729933;
 
 	EXPECT_DOUBLE_EQ(p.norm(), norm);
@@ -73,9 +73,9 @@ TEST(Quaterniond, Norm)
 
 TEST(Quaterniond, Product)
 {
-	geom::Quaterniond	p(geom::Vector4d {1.0, -2.0, 1.0, 3.0});
-	geom::Quaterniond	q(geom::Vector4d {-1.0, 2.0, 3.0, 2.0});
-	geom::Quaterniond	expected(geom::Vector4d{-9.0, -2.0, 11.0, 8.0});
+	geom::Quaterniond	p {3.0, 1.0, -2.0, 1.0};
+	geom::Quaterniond	q {2.0, -1.0, 2.0, 3.0};
+	geom::Quaterniond	expected {8.0, -9.0, -2.0, 11.0};
 
 	EXPECT_EQ(p * q, expected);
 }
@@ -111,10 +111,10 @@ TEST(Quaterniond, ShortestSLERP)
 {
 	// Our starting point is an orientation that is yawed 45° - our
 	// orientation is pointed π/4 radians in the X axis.
-	geom::Quaterniond	p {0.382683, 0, 0, 0.92388};
+	geom::Quaterniond	p {0.92388, 0.382683, 0, 0};
 	// Our ending point is an orientation that is yawed -45° - or
 	// pointed -π/4 radians in the X axis.
-	geom::Quaterniond	q {-0.382683, 0, 0, 0.92388};
+	geom::Quaterniond	q {0.92388, -0.382683, 0, 0};
 	// The halfway point should be oriented midway about the X axis. It turns
 	// out this is an identity quaternion.
 	geom::Quaterniond	r;
@@ -129,13 +129,13 @@ TEST(Quaterniond, ShortestSLERP2)
 {
 	// Start with an orientation pointing forward, all Euler angles
 	// set to 0.
-	geom::Quaterniond	start {0.0, 0.0, 0.0, 1.0};
+	geom::Quaterniond	start {1.0, 0.0, 0.0, 0.0};
 	// The goal is to end up face up, or 90º pitch (still facing forward).
-	geom::Quaterniond	end {0, -0.707107, 0, 0.707107};
+	geom::Quaterniond	end {0.707107, 0, -0.707107, 0};
 	// Halfway to the endpoint should be a 45º pitch.
-	geom::Quaterniond	halfway {0, -0.382683, 0, 0.92388 };
+	geom::Quaterniond	halfway {0.92388, 0, -0.382683, 0};
 	// 2/3 of the way should be 60º pitch.
-	geom::Quaterniond	twoThirds {0, -0.5, 0, 0.866025};
+	geom::Quaterniond	twoThirds {0.866025, 0, -0.5, 0};
 
 	EXPECT_EQ(ShortestSLERP(start, end, 0.0), start);
 	EXPECT_EQ(ShortestSLERP(start, end, 1.0), end);
@@ -146,7 +146,7 @@ TEST(Quaterniond, ShortestSLERP2)
 
 TEST(Quaterniond, Unit)
 {
-	geom::Quaterniond	q(geom::Vector4d{0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.0});
+	geom::Quaterniond	q {0.0, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258};
 
 	EXPECT_TRUE(q.isUnitQuaternion());
 }
@@ -157,7 +157,7 @@ TEST(Quaterniond, UtilityCreator)
 	geom::Vector3d		v {1.0, 1.0, 1.0};
 	double			w = M_PI;
 	geom::Quaterniond	p = geom::quaterniond(v, w);
-	geom::Quaterniond	q(geom::Vector4d{0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.0});
+	geom::Quaterniond	q {0.0, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258};
 
 	EXPECT_EQ(p, q);
 }
@@ -165,9 +165,9 @@ TEST(Quaterniond, UtilityCreator)
 
 TEST(Quaternionf, Addition)
 {
-	geom::Quaternionf	p(geom::Vector4f {1.0, -2.0, 1.0, 3.0});
-	geom::Quaternionf	q(geom::Vector4f {-1.0, 2.0, 3.0, 2.0});
-	geom::Quaternionf	expected(geom::Vector4f{0.0, 0.0, 4.0, 5.0});
+	geom::Quaternionf	p {3.0, 1.0, -2.0, 1.0};
+	geom::Quaternionf	q {2.0, -1.0, 2.0, 3.0};
+	geom::Quaternionf	expected {5.0, 0.0, 0.0, 4.0};
 
 	EXPECT_EQ(p + q, expected);
 	EXPECT_EQ(expected - q, p);
@@ -177,8 +177,8 @@ TEST(Quaternionf, Addition)
 
 TEST(Quaternionf, Conjugate)
 {
-	geom::Quaternionf	p(geom::Vector4f {3.0, 4.0, 5.0, 2.0});
-	geom::Quaternionf	q(geom::Vector4f {-3.0, -4.0, -5.0, 2.0});
+	geom::Quaternionf	p {2.0, 3.0, 4.0, 5.0};
+	geom::Quaternionf	q {2.0, -3.0, -4.0, -5.0};
 
 	EXPECT_EQ(p.conjugate(), q);
 }
@@ -195,7 +195,7 @@ TEST(Quaternionf, Euler)
 
 TEST(Quaternionf, Identity)
 {
-	geom::Quaternionf	p(geom::Vector4f {1.0, -2.0, 1.0, 3.0});
+	geom::Quaternionf	p {1.0, 3.0, 1.0, -2.0};
 	geom::Quaternionf	q;
 
 	EXPECT_EQ(p * q, p);
@@ -204,8 +204,8 @@ TEST(Quaternionf, Identity)
 
 TEST(Quaternionf, Inverse)
 {
-	geom::Quaternionf	p(geom::Vector4f {3.0, 4.0, 5.0, 2.0});
-	geom::Quaternionf	q(geom::Vector4f {-0.05556, -0.07407, -0.09259, 0.03704 });
+	geom::Quaternionf	p {2.0, 3.0, 4.0, 5.0};
+	geom::Quaternionf	q {0.03704, -0.05556, -0.07407, -0.09259};
 
 	EXPECT_EQ(p.inverse(), q);
 }
@@ -213,10 +213,7 @@ TEST(Quaternionf, Inverse)
 
 TEST(Quaternionf, Norm)
 {
-	geom::Quaternionf	p(geom::Vector4f {0.9899139811480784,
-						  9.387110042325054,
-						  6.161341707794767,
-						  5.563199889674063});
+	geom::Quaternionf	p {0.9899139811480784, 9.387110042325054, 6.161341707794767, 5.563199889674063};
 	float 			norm = 12.57016663729933;
 
 	EXPECT_FLOAT_EQ(p.norm(), norm);
@@ -225,9 +222,9 @@ TEST(Quaternionf, Norm)
 
 TEST(Quaternionf, Product)
 {
-	geom::Quaternionf	p(geom::Vector4f {1.0, -2.0, 1.0, 3.0});
-	geom::Quaternionf	q(geom::Vector4f {-1.0, 2.0, 3.0, 2.0});
-	geom::Quaternionf	expected(geom::Vector4f{-9.0, -2.0, 11.0, 8.0});
+	geom::Quaternionf	p {3.0, 1.0, -2.0, 1.0};
+	geom::Quaternionf	q {2.0, -1.0, 2.0, 3.0};
+	geom::Quaternionf	expected {8.0, -9.0, -2.0, 11.0};
 
 	EXPECT_EQ(p * q, expected);
 }
@@ -251,10 +248,10 @@ TEST(Quaternionf, ShortestSLERP)
 {
 	// Our starting point is an orientation that is yawed 45° - our
 	// orientation is pointed π/4 radians in the X axis.
-	geom::Quaternionf	p {0.382683, 0, 0, 0.92388};
+	geom::Quaternionf	p {0.92388, 0.382683, 0, 0};
 	// Our ending point is an orientation that is yawed -45° - or
 	// pointed -π/4 radians in the X axis.
-	geom::Quaternionf	q {-0.382683, 0, 0, 0.92388};
+	geom::Quaternionf	q {0.92388, -0.382683, 0, 0};
 	// The halfway point should be oriented midway about the X axis. It turns
 	// out this is an identity quaternion.
 	geom::Quaternionf	r;
@@ -269,13 +266,13 @@ TEST(Quaternionf, ShortestSLERP2)
 {
 	// Start with an orientation pointing forward, all Euler angles
 	// set to 0.
-	geom::Quaternionf	start {0.0, 0.0, 0.0, 1.0};
+	geom::Quaternionf	start {1.0, 0.0, 0.0, 0.0};
 	// The goal is to end up face up, or 90º pitch (still facing forward).
-	geom::Quaternionf	end {0, -0.707107, 0, 0.707107};
+	geom::Quaternionf	end {0.707107, 0, -0.707107, 0};
 	// Halfway to the endpoint should be a 45º pitch.
-	geom::Quaternionf	halfway {0, -0.382683, 0, 0.92388 };
+	geom::Quaternionf	halfway {0.92388, 0, -0.382683, 0};
 	// 2/3 of the way should be 60º pitch.
-	geom::Quaternionf	twoThirds {0, -0.5, 0, 0.866025};
+	geom::Quaternionf	twoThirds {0.866025, 0, -0.5, 0};
 
 	EXPECT_EQ(ShortestSLERP(start, end, (float)0.0), start);
 	EXPECT_EQ(ShortestSLERP(start, end, (float)1.0), end);
@@ -286,7 +283,7 @@ TEST(Quaternionf, ShortestSLERP2)
 
 TEST(Quaternionf, Unit)
 {
-	geom::Quaternionf	q(geom::Vector4f{0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.0});
+	geom::Quaternionf	q {0.0, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258};
 
 	EXPECT_TRUE(q.isUnitQuaternion());
 }
@@ -297,7 +294,7 @@ TEST(Quaternionf, UtilityCreator)
 	geom::Vector3f		v {1.0, 1.0, 1.0};
 	float			w = M_PI;
 	geom::Quaternionf	p = geom::quaternionf(v, w);
-	geom::Quaternionf	q(geom::Vector4f{0.5773502691896258, 0.5773502691896258, 0.5773502691896258, 0.0});
+	geom::Quaternionf	q {0.0, 0.5773502691896258, 0.5773502691896258, 0.5773502691896258};
 
 	EXPECT_EQ(p, q);
 }
@@ -305,20 +302,22 @@ TEST(Quaternionf, UtilityCreator)
 
 TEST(QuaternionMiscellaneous, SanityChecks)
 {
-	geom::Vector4d		q {1.0, 2.0, 3.0, 4.0};
+	geom::Vector4d		q {4.0, 1.0, 2.0, 3.0};
 	geom::Vector3d		v {1.0, 2.0, 3.0};
 	double 			w = 4.0;
 	geom::Quaterniond	p(q);
+	geom::Quaterniond	u = p.unitQuaternion();
 
 	EXPECT_EQ(p.axis(), v);
 	EXPECT_DOUBLE_EQ(p.angle(), w);
+	EXPECT_TRUE(u.isUnitQuaternion());
 }
 
 
 TEST(QuaternionMiscellaneous, OutputStream)
 {
-	geom::Quaternionf	p(geom::Vector4f {1.0, 2.0, 3.0, 4.0});
-	geom::Quaterniond	q(geom::Vector4d {1.0, 2.0, 3.0, 4.0});
+	geom::Quaternionf	p {4.0, 1.0, 2.0, 3.0};
+	geom::Quaterniond	q {4.0, 1.0, 2.0, 3.0};
 	stringstream		ss;
 
 	ss << p;

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <wrmath/geom/quaternion.h>
 
 
@@ -39,7 +40,7 @@ quaternionf_from_euler(Vector3f euler)
 	z = (cos_yaw * cos_pitch * sin_roll) + (sin_yaw * sin_pitch * cos_roll);
 	w = (cos_yaw * cos_pitch * cos_roll) - (sin_yaw * sin_pitch * sin_roll);
 
-	return Quaternionf(Vector4f{x, y, z, w});
+	return Quaternionf(Vector4f{w, x, y, z});
 }
 
 
@@ -61,7 +62,7 @@ quaterniond_from_euler(Vector3d euler)
 	z = (cos_yaw * cos_pitch * sin_roll) + (sin_yaw * sin_pitch * cos_roll);
 	w = (cos_yaw * cos_pitch * cos_roll) - (sin_yaw * sin_pitch * sin_roll);
 
-	return Quaterniond(Vector4d{x, y, z, w});
+	return Quaterniond(Vector4d{w, x, y, z});
 }
 
 
@@ -78,6 +79,7 @@ Quaternion_SelfTest()
 	Vector3f		vr {0.0, 0.0, 1.0};
 
 	assert(p.isUnitQuaternion());
+	std::cerr << p.rotate(v) << std::endl;
 	assert(p.rotate(v) == vr);
 	assert(p * q == p);
 #endif

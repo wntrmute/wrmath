@@ -24,7 +24,7 @@ namespace geom {
 /// Quaternions encode rotations in three-dimensional space. While technically
 /// a quaternion is comprised of a real element and a complex vector<3>, for
 /// the purposes of this library, it is modeled as a floating point 4D vector
-/// of the form <x, y, z, w>, where x, y, and z represent an axis of rotation in
+/// of the form <w, x, y, z>, where x, y, and z represent an axis of rotation in
 /// R3 and w the angle, in radians, of the rotation about that axis. Where Euler
 /// angles are concerned, the ZYX (or yaw, pitch, roll) sequence is used.
 ///
@@ -43,9 +43,7 @@ namespace geom {
 template<typename T>
 class Quaternion {
 public:
-	///
 	/// The default Quaternion constructor returns an identity quaternion.
-	///
 	Quaternion() : v(Vector<T, 3>{0.0, 0.0, 0.0}), w(1.0)
 	{
 		wr::math::DefaultEpsilon(this->eps);
@@ -56,6 +54,7 @@ public:
 	/// A Quaternion may be initialised with a Vector<T, 3> axis of rotation
 	/// and an angle of rotation. This doesn't do the angle transforms to simplify
 	/// internal operations.
+	///
 	/// @param _axis A three-dimensional vector of the same type as the Quaternion.
 	/// @param _angle The angle of rotation about the axis of rotation.
 	Quaternion(Vector<T, 3> _axis, T _angle) : v(_axis), w(_angle)
@@ -65,14 +64,14 @@ public:
 		v.setEpsilon(this->eps);
 	};
 
-	///
+
 	/// A Quaternion may be initialised with a Vector<T, 4> comprised of
 	/// the axis of rotation followed by the angle of rotation.
-	/// @param vector A vector in the form <x, y, z, w>.
 	///
+	/// @param vector A vector in the form <w, x, y, z>.
 	Quaternion(Vector<T, 4> vector) :
-		v(Vector<T, 3>{vector[0], vector[1], vector[2]}),
-		w(vector[3])
+		v(Vector<T, 3>{vector[1], vector[2], vector[3]}),
+		w(vector[0])
 	{
 		this->constrainAngle();
 		wr::math::DefaultEpsilon(this->eps);
@@ -80,15 +79,16 @@ public:
 	}
 
 	
-	/// A Quaternion may be constructed with an initializer list of type T, which must have
-	/// exactly N element.
-	/// @param ilst An initial set of values in the form <x, y, z, w>.
+	/// A Quaternion may be constructed with an initializer list of
+	/// type T, which must have exactly N elements.
+	///
+	/// @param ilst An initial set of values in the form <w, x, y, z>.
 	Quaternion(std::initializer_list<T> ilst)
 	{
 		auto it = ilst.begin();
 
-		this->v = Vector<T, 3>{it[0], it[1], it[2]};
-		this->w = it[3];
+		this->v = Vector<T, 3>{it[1], it[2], it[3]};
+		this->w = it[0];
 
 		this->constrainAngle();
 		wr::math::DefaultEpsilon(this->eps);
@@ -97,6 +97,7 @@ public:
 
 	
 	/// Set the comparison tolerance for this quaternion.
+	///
 	/// @param epsilon A tolerance value.
 	void
 	setEpsilon(T epsilon)
@@ -107,6 +108,7 @@ public:
 
 
 	/// Return the axis of rotation of this quaternion.
+	///
 	/// @return The axis of rotation of this quaternion.
 	Vector<T, 3>
 	axis() const
@@ -116,6 +118,7 @@ public:
 
 
 	/// Return the angle of rotation of this quaternion.
+	///
 	/// @return the angle of rotation of this quaternion.
 	T
 	angle() const
@@ -168,15 +171,17 @@ public:
 	}
 
 	/// Compute the conjugate of a quaternion.
+	///
 	/// @return The conjugate of this quaternion.
 	Quaternion
 	conjugate() const
 	{
-		return Quaternion(Vector<T, 4>{-this->v[0], -this->v[1], -this->v[2], this->w});
+		return Quaternion(Vector<T, 4>{this->w, -this->v[0], -this->v[1], -this->v[2]});
 	}
 
 
 	/// Compute the inverse of a quaternion.
+	///
 	/// @return The inverse of this quaternion.
 	Quaternion
 	inverse() const
@@ -187,7 +192,18 @@ public:
 	}
 
 
+	/// Determine whether this is an identity quaternion.
+	///
+	/// \return true if this is an identity quaternion.
+	bool
+	isIdentity() const {
+		return this->v.isZero() &&
+		       math::WithinTolerance(this->w, (T)1.0, this->eps);
+	}
+
+
 	/// Determine whether this is a unit quaternion.
+	///
 	/// @return true if this is a unit quaternion.
 	bool
 	isUnitQuaternion() const
@@ -198,15 +214,17 @@ public:
 
 	/// Return the quaternion as a Vector<T, 4>, with the axis of rotation
 	/// followed by the angle of rotation.
+	///
 	/// @return A vector representation of the quaternion.
 	Vector<T, 4>
 	asVector() const
 	{
-		return Vector<T, 4>{this->v[0], this->v[1], this->v[2], this->w};
+		return Vector<T, 4>{this->w, this->v[0], this->v[1], this->v[2]};
 	}
 
 
 	/// Rotate vector v about this quaternion.
+	///
 	/// @param v The vector to be rotated.
 	/// @return The rotated vector.
 	Vector<T, 3>
@@ -219,6 +237,7 @@ public:
 	/// Return the Euler angles for this quaternion as a vector of
 	/// <yaw, pitch, roll>. Users of this function should watch out
 	/// for gimbal lock.
+	///
 	/// @return A vector<T, 3> containing <yaw, pitch, roll>
 	Vector<T, 3>
 	euler() const
@@ -238,6 +257,7 @@ public:
 
 
 	/// Perform quaternion addition with another quaternion.
+	///
 	/// @param other The quaternion to be added with this one.
 	/// @return The result of adding the two quaternions together.
 	Quaternion
@@ -248,6 +268,7 @@ public:
 
 
 	/// Perform quaternion subtraction with another quaternion.
+	///
 	/// @param other The quaternion to be subtracted from this one.
 	/// @return The result of subtracting the other quaternion from this one.
 	Quaternion
@@ -258,6 +279,7 @@ public:
 
 
 	/// Perform scalar multiplication.
+	///
 	/// @param k The scaling value.
 	/// @return A scaled quaternion.
 	Quaternion
@@ -268,6 +290,7 @@ public:
 
 
 	/// Perform scalar division.
+	///
 	/// @param k The scalar divisor.
 	/// @return A scaled quaternion.
 	Quaternion
@@ -280,6 +303,7 @@ public:
 	/// Perform quaternion Hamilton multiplication with a three-
 	/// dimensional vector; this is done by treating the vector
 	/// as a pure quaternion (e.g. with an angle of rotation of 0).
+	///
 	/// @param vector The vector to multiply with this quaternion.
 	/// @return The Hamilton product of the quaternion and vector.
 	Quaternion
@@ -291,6 +315,7 @@ public:
 
 
 	/// Perform quaternion Hamilton multiplication.
+	///
 	/// @param other The other quaternion to multiply with this one.
 	/// @result The Hamilton product of the two quaternions.
 	Quaternion
@@ -317,6 +342,7 @@ public:
 
 
 	/// Perform quaternion inequality checking.
+	///
 	/// @param other The quaternion to check inequality against.
 	/// @return True if the two quaternions are unequal within their tolerance.
 	bool
@@ -328,6 +354,7 @@ public:
 
 	/// Support stream output of a quaternion in the form `a + <i, j, k>`.
 	/// \todo improve the formatting.
+	///
 	/// @param outs An output stream
 	/// @param q A quaternion
 	/// @return The output stream
@@ -375,6 +402,7 @@ typedef Quaternion<double> Quaterniond;
 
 /// Return a float quaternion scaled appropriately from a vector and angle,
 /// e.g. angle = cos(angle / 2), axis.unitVector() * sin(angle / 2).
+///
 /// @param axis The axis of rotation.
 /// @param angle The angle of rotation.
 /// @return A quaternion.
@@ -384,6 +412,7 @@ Quaternionf	quaternionf(Vector3f axis, float angle);
 
 /// Return a double quaternion scaled appropriately from a vector and angle,
 /// e.g. angle = cos(angle / 2), axis.unitVector() * sin(angle / 2).
+///
 /// @param axis The axis of rotation.
 /// @param angle The angle of rotation.
 /// @return A quaternion.
@@ -391,8 +420,25 @@ Quaternionf	quaternionf(Vector3f axis, float angle);
 Quaterniond	quaterniond(Vector3d axis, double angle);
 
 
+/// Return a double quaternion scaled appropriately from a vector and angle,
+/// e.g. angle = cos(angle / 2), axis.unitVector() * sin(angle / 2).
+///
+/// @param axis The axis of rotation.
+/// @param angle The angle of rotation.
+/// @return A quaternion.
+/// @relatesalso Quaternion
+template <typename T>
+Quaternion<T>
+quaternion(Vector<T, 3> axis, T angle)
+{
+	return Quaternion<T>(axis.unitVector() * std::sin(angle / (T)2.0),
+			     std::cos(angle / (T)2.0));
+}
+
+
 /// Given a vector of Euler angles in ZYX sequence (e.g. yaw, pitch, roll),
 /// return a quaternion.
+///
 /// @param euler A vector Euler angle in ZYX sequence.
 /// @return A Quaternion representation of the orientation represented
 ///         by the Euler angles.
@@ -402,6 +448,7 @@ Quaternionf	quaternionf_from_euler(Vector3f euler);
 
 /// Given a vector of Euler angles in ZYX sequence (e.g. yaw, pitch, roll),
 /// return a quaternion.
+///
 /// @param euler A vector Euler angle in ZYX sequence.
 /// @return A Quaternion representation of the orientation represented
 ///         by the Euler angles.

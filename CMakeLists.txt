@@ -40,7 +40,12 @@ message("${${PROJECT_NAME}_SOURCES}	 -> libwrmath")
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
 add_executable(euler2quat tools/euler2quat.cc)
 target_link_libraries(euler2quat ${PROJECT_NAME})
-set_target_properties(${TESTNAME} PROPERTIES
+set_target_properties(euler2quat PROPERTIES
+		FOLDER bin
+		RUNTIME_OUTPUT_DIRECTORY bin)
+add_executable(quaternion tools/quaternion.cc)
+target_link_libraries(quaternion ${PROJECT_NAME})
+set_target_properties(quaternion PROPERTIES
 		FOLDER bin
 		RUNTIME_OUTPUT_DIRECTORY bin)
 
@@ -84,6 +89,7 @@ endmacro()
 package_add_gtest(vector_test 		test/vector_test.cc)
 package_add_gtest(orientation_test 	test/orientation_test.cc)
 package_add_gtest(quaternion_test 	test/quaternion_test.cc)
+package_add_gtest(madgwick_test		test/madgwick_test.cc)
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose DEPENDS ${TEST_EXECS})
 

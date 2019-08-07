@@ -34,12 +34,12 @@ convertEulerToQuat(char **argv)
 static void
 convertQuatToEuler(char **argv)
 {
-	double	x = stod(string(argv[0]));
-	double	y = stod(string(argv[1]));
-	double	z = stod(string(argv[1]));
-	double	w = stod(string(argv[1]));
+	double	x = stod(string(argv[1]));
+	double	y = stod(string(argv[2]));
+	double	z = stod(string(argv[3]));
+	double	w = stod(string(argv[0]));
 
-	geom::Quaterniond	quaternion {x, y, z, w};
+	geom::Quaterniond	quaternion {w, x, y, z};
 	auto			euler = quaternion.euler() * (180.0 / M_PI);
 
 	cout << "Euler ZYX: " << euler << endl;
