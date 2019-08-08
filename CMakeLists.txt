@@ -11,6 +11,7 @@ cmake_policy(SET CMP0048 NEW)
 project(wrmath VERSION 0.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Don't warn on unused functions, because this is a library and not all
 # functions might be used.
@@ -33,16 +34,17 @@ include_directories(include)
 file(GLOB_RECURSE ${PROJECT_NAME}_HEADERS include/**.h)
 file(GLOB_RECURSE ${PROJECT_NAME}_SOURCES src/*.cc)
 
-message("${${PROJECT_NAME}_SOURCES}	 -> libwrmath")
 
 ## BUILD
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
+
 add_executable(euler2quat tools/euler2quat.cc)
 target_link_libraries(euler2quat ${PROJECT_NAME})
 set_target_properties(euler2quat PROPERTIES
 		FOLDER bin
 		RUNTIME_OUTPUT_DIRECTORY bin)
+
 add_executable(quaternion tools/quaternion.cc)
 target_link_libraries(quaternion ${PROJECT_NAME})
 set_target_properties(quaternion PROPERTIES
@@ -51,16 +53,23 @@ set_target_properties(quaternion PROPERTIES
 
 ## INSTALL
 
+install(TARGETS ${PROJECT_NAME} DESTINATION lib)
+install(TARGETS euler2quat DESTINATION bin)
+install(TARGETS quaternion DESTINATION bin)
 install(DIRECTORY include/${PROJECT_NAME}
 	DESTINATION include/
 	FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY docs/sphinx/_build/html/
+	DESTINATION share/doc/${PROJECT_NAME}
+	FILES_MATCHING PATTERN "*.html")
+	 
 
 
 ## TEST
 
 # From Modern CMake:
 # https://cliutils.gitlab.io/modern-cmake/chapters/testing/googletest.html
-add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest" EXCLUDE_FROM_ALL)
 include_directories("${gtest_SOURCE_DIR}/include")
 mark_as_advanced(
     BUILD_GMOCK BUILD_GTEST BUILD_SHARED_LIBS
