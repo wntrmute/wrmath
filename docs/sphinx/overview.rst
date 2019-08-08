@@ -22,6 +22,6 @@ Important classes
 -----------------
 
 The foundational class of this library (and here's to a real mathematical
-workhorse) is the :class:`wr::geom::Vector`` class.
+workhorse) is the :class:`wr::geom::Vector` class.
 
 Other important classes are the :class:`wr::geom::Quaternion` class.

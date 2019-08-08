@@ -70,8 +70,11 @@ exhale_args = {
     "doxygenStripFromPath":  "..",
     # Suggested optional arguments
     "createTreeView":        True,
-    #"exhaleExecutesDoxygen": True,
-    #"exhaleDoxygenStdin":    "INPUT = ../include"
+    "exhaleExecutesDoxygen": True,
+    "exhaleDoxygenStdin":    """
+INPUT = ../../include ../../src
+USE_XML = YES
+"""
 }
 
 # Tell sphinx what the primary language being documented is.
