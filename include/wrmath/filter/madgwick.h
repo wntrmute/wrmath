@@ -19,8 +19,8 @@ namespace filter {
 /// @brief Madgwick implements an efficient orientation filter for IMUs.
 ///
 /// Madgwick is a  novel  orientation  filter  applicable  to  IMUs
-/// consisting  oftri-axis  gyroscopes  and  accelerometers,  and  MARG
-/// sensor  arrays  that  also  includetri-axis magnetometers.  The MARG
+/// consisting of tri-axis  gyroscopes  and  accelerometers,  and  MARG
+/// sensor  arrays  that  also  include tri-axis magnetometers.  The MARG
 /// implementation incorporates magnetic distortionand  gyroscope  bias
 /// drift  compensation.
 ///
